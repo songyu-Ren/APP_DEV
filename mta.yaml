@@ -14,6 +14,81 @@ build-parameters:
         - npx rimraf gen/db/src/gen/data
 
 modules:
+ - name: nsrisks
+   type: html5
+   path: app/risks
+   build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+ - name: nsmitigations
+   type: html5
+   path: app/mitigations
+   build-parameters:
+     build-result: dist
+     builder: custom
+     commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+ - name: cpapp-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: cpapp-html5-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - nsrisks.zip
+      name: nsrisks
+      target-path: resources/
+    - artifacts:
+      - nsmitigations.zip
+      name: nsmitigations
+      target-path: resources/
+- name: cpapp-destinations
+   type: com.sap.application.content
+   requires:
+     - name: cpapp-uaa
+       parameters:
+         service-key:
+           name: cpapp-uaa-key
+     - name: cpapp-html5-repo-host
+       parameters:
+         service-key:
+           name: cpapp-html5-repo-host-key
+     - name: srv-api
+     - name: cpapp-destination
+       parameters:
+         content-target: true
+   parameters:
+     content:
+       instance:
+         destinations:
+           - Authentication: OAuth2UserTokenExchange
+             Name: cpapp-app-srv
+             TokenServiceInstanceName: cpapp-uaa
+             TokenServiceKeyName: cpapp-uaa-key
+             URL: '~{srv-api/srv-url}'
+             sap.cloud.service: cpapp.service
+           - Name: cpapp-html5-repo-host
+             ServiceInstanceName: cpapp-html5-repo-host
+             ServiceKeyName: cpapp-html5-repo-host-key
+             sap.cloud.service: cpapp.service
+           - Authentication: OAuth2UserTokenExchange
+             Name: cpapp-uaa
+             ServiceInstanceName: cpapp-uaa
+             ServiceKeyName: cpapp-uaa-key
+             sap.cloud.service: cpapp.service
+         existing_destinations_policy: update
+   build-parameters:
+     no-source: true
   - name: cpapp-srv
     type: nodejs
     path: gen/srv
@@ -38,6 +113,18 @@ modules:
       - name: cpapp-db
 
 resources:
+  - name: cpapp-html5-repo-host
+   type: org.cloudfoundry.managed-service
+   parameters:
+     service: html5-apps-repo
+     service-plan: app-host
+  - name: cpapp-destination
+   type: org.cloudfoundry.managed-service
+   parameters:
+     service: destination
+     service-plan: lite
+     config:
+       HTML5Runtime_enabled: true
   - name: cpapp-db
     type: com.sap.xs.hdi-container
     parameters:
