@@ -5,17 +5,17 @@
                 "strategy": "mock",
                 "users": {
                     "risk.viewer@tester.sap.com": {
-                        "password": "initial",
-                        "ID": "risk.viewer@tester.sap.com",
+                        "password": "admin",
+                        "ID": "songyu.ren@test.com",
                         "roles": [
-                            "RiskViewer"
+                            "Viewer"
                         ]
                     },
-                    "risk.manager@tester.sap.com": {
-                        "password": "initial",
-                        "ID": "risk.manager@tester.sap.com",
+                    "songyu.ren@test.com": {
+                        "password": "admin",
+                        "ID": "songyu.ren@test.com",
                         "roles": [
-                            "RiskManager"
+                            "Manager"
                         ]
                     }
                 }

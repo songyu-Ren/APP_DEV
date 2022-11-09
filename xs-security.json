@@ -1,29 +1,29 @@
 {
   "scopes": [
     {
-      "name": "$XSAPPNAME.RiskViewer",
-      "description": "RiskViewer"
+      "name": "$XSAPPNAME.Viewer",
+      "description": "Viewer"
     },
     {
-      "name": "$XSAPPNAME.RiskManager",
-      "description": "RiskManager"
+      "name": "$XSAPPNAME.Manager",
+      "description": "Manager"
     }
   ],
   "attributes": [],
   "role-templates": [
     {
-      "name": "RiskViewer",
+      "name": "Viewer",
       "description": "generated",
       "scope-references": [
-        "$XSAPPNAME.RiskViewer"
+        "$XSAPPNAME.Viewer"
       ],
       "attribute-references": []
     },
     {
-      "name": "RiskManager",
+      "name": "Manager",
       "description": "generated",
       "scope-references": [
-        "$XSAPPNAME.RiskManager"
+        "$XSAPPNAME.Manager"
       ],
       "attribute-references": []
     }

@@ -14,23 +14,13 @@ build-parameters:
         - npx rimraf gen/db/src/gen/data
 
 modules:
- - name: nsrisks
+ - name: nsenergy
    type: html5
-   path: app/risks
+   path: app/energy
    build-parameters:
     build-result: dist
     builder: custom
     commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
- - name: nsmitigations
-   type: html5
-   path: app/mitigations
-   build-parameters:
-     build-result: dist
-     builder: custom
-     commands:
     - npm install
     - npm run build:cf
     supported-platforms: []
@@ -45,12 +35,8 @@ modules:
     build-result: resources
     requires:
     - artifacts:
-      - nsrisks.zip
-      name: nsrisks
-      target-path: resources/
-    - artifacts:
-      - nsmitigations.zip
-      name: nsmitigations
+      - nsenergh.zip
+      name: nsenergy
       target-path: resources/
 - name: cpapp-destinations
    type: com.sap.application.content
@@ -140,11 +126,11 @@ resources:
        xsappname: cpapp-${space}    #  name + space dependency
        tenant-mode: dedicated
        role-collections:
-         - name: 'RiskManager-${space}'
-           description: Manage Risks
+         - name: 'Manager-${space}'
+           description: Manage
            role-template-references:
-             - $XSAPPNAME.RiskManager
-         - name: 'RiskViewer-${space}'
-           description: View Risks
+             - $XSAPPNAME.Manager
+         - name: 'Viewer-${space}'
+           description: View
            role-template-references:
-             - $XSAPPNAME.RiskViewer
+             - $XSAPPNAME.Viewer

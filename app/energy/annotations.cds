@@ -1,0 +1,1 @@
+using energyService as service from '../../srv/energy-service';
